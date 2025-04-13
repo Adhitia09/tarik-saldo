@@ -1,7 +1,7 @@
 node {
-    def repoUrl = https://gitlab.com/Gumelar09/be_java.git
-    def branch = main
-    def app = bejava
+    def repoUrl = "gitlab.com/Gumelar09/be_java.git"
+    def branch = "main"
+    def app = "bejava"
 
     stage ('Clone Repository') {
         withCredentials([usernamePassword(credentialsId: 'gitlab-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
