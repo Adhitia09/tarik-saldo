@@ -13,7 +13,7 @@ node {
     }
 
     stage ('Checkout Branch') {
-        dir(source) {
+        dir("source") {
             sh "git fetch"
             sh "git switch branch ${branch}"
             sh "mvn test"
@@ -22,7 +22,7 @@ node {
     }
 
     stage ('Build Image With Docker') {
-        dir(source) {
+        dir("source") {
             sh "mkdir -p build-folder/target"
             sh "cp Dockerfile build-folder/Dockerfile"
             sh "cp target/*.jar build-folder/target/"
@@ -35,7 +35,7 @@ node {
     }
 
     stage ('Push to Dockerhub') {
-        dir(source) {
+        dir("source") {
             withCredentials([usernamePassword(credentialsId: 'docker-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 sh "docker push docker.io/adhitia09/${app}:${tag}  https://\${USERNAME}:\${PASSWORD}@index.docker.io/v1/ source "
             }
@@ -49,7 +49,7 @@ node {
     }
 
     stage ('Run Aplikasi with Container') {
-        dir(source) {
+        dir("source") {
             sh "docker-compose -d up"
         }
     }
