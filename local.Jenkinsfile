@@ -2,10 +2,11 @@ node {
     def repoUrl = "gitlab.com/Gumelar09/be_java.git"
     def branch = "main"
     def app = "bejava"
-    def fullUrl = "https://${USERNAME}:${PASSWORD}@${repoUrl}"
+    
 
     stage ('Clone Repository') {
         withCredentials([usernamePassword(credentialsId: 'gitlab-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            def fullUrl = "https://${USERNAME}:${PASSWORD}@${repoUrl}"
             echo "Repo URL: ${fullUrl}" // Debug
             sh "git clone ${fullUrl} source"
         }
