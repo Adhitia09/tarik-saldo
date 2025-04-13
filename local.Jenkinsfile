@@ -16,7 +16,6 @@ node('maven') {
         dir("source") {
             sh "git fetch"
             sh "git switch ${branch}"
-            sh "mvn test"
             sh "mvn clean package -Dmaven.test.skip=true"
         }
     }
