@@ -25,19 +25,19 @@ pipeline {
 
         def tag = sh(returnStdout: true, script: "git rev-parse --short=8 HEAD").trim();
 
-        sh "podman build -t ${app} . "
-        sh "podman tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
+        sh "docker build -t ${app} . "
+        sh "docker tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
     }
 
     stage ('Push to Dockerhub') {
         withCredentials([usernamePassword(credentialsId: 'gitlab-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            sh "podman push docker.io/adhitia09/${app}:${tag}  https://\${USERNAME}:\${PASSWORD}@index.docker.io/v1/ source "
+            sh "docker push docker.io/adhitia09/${app}:${tag}  https://\${USERNAME}:\${PASSWORD}@index.docker.io/v1/ source "
         }
 
-        sh "podman tag docker.io/adhitia09/${app}:${tag} docker.io/adhitia09/${app}:latest"
+        sh "docker tag docker.io/adhitia09/${app}:${tag} docker.io/adhitia09/${app}:latest"
 
         withCredentials([usernamePassword(credentialsId: 'gitlab-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            sh "podman push docker.io/adhitia09/${app}:latest  https://\${USERNAME}:\${PASSWORD}@index.docker.io/v1/ source "
+            sh "docker push docker.io/adhitia09/${app}:latest  https://\${USERNAME}:\${PASSWORD}@index.docker.io/v1/ source "
         }
     }
 
