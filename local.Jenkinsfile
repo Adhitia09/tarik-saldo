@@ -1,5 +1,5 @@
 node {
-    def repoUrl = gitlab.com/Gumelar09/be_java.git
+    def repoUrl = https://gitlab.com/Gumelar09/be_java.git
     def branch = main
     def app = bejava
 
