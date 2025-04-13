@@ -29,6 +29,7 @@ node('maven') {
             def tag = sh(returnStdout: true, script: "git rev-parse --short=8 HEAD").trim();
 
             sh "podman build -t ${app} . "
+            sh "podman images"
             sh "podman tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
         }
     }
