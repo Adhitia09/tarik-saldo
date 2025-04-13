@@ -1,5 +1,5 @@
 # Gunakan image JDK yang lebih ringan untuk runtime
-FROM openjdk:21-jdk-slim
+FROM docker.io/openjdk:21-jdk-slim
 
 ENV SPRING_MVC_DISPATCH_TRACE_REQUEST=false
 ENV SPRING_MVC_DISPATCH_DELETE_REQUEST=false
