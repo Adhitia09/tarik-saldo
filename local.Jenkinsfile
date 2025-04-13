@@ -1,4 +1,4 @@
-node {
+node('maven') {
     def repoUrl = "gitlab.com/Gumelar09/be_java.git"
     def branch = "main"
     def app = "bejava"
