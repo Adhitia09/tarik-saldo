@@ -6,9 +6,11 @@ node {
 
     stage ('Clone Repository') {
         withCredentials([usernamePassword(credentialsId: 'gitlab-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            def fullUrl = "https://${USERNAME}:${PASSWORD}@${repoUrl}"
-            echo "Repo URL: ${fullUrl}" // Debug
-            sh "git clone ${fullUrl} source"
+            sh '''
+                git config --global credential.helper store
+                echo "https://${USERNAME}:${PASSWORD}@gitlab.com" > ~/.git-credentials
+                git clone https://gitlab.com/Gumelar09/be_java.git source
+            '''
         }
     }
 
@@ -17,6 +19,7 @@ node {
         sh "git switch branch ${branch}"
         sh "mvn test"
         sh "mvn clean package -Dmaven.test.skip=true"
+        sh "rm -f ~/.git-credentials"
     }
 
     stage ('Build Image With Docker') {
