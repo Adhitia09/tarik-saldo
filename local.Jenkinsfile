@@ -5,7 +5,9 @@ node {
 
     stage ('Clone Repository') {
         withCredentials([usernamePassword(credentialsId: 'gitlab-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            sh "git clone https://\${USERNAME}:\${PASSWORD}@${repoUrl} source "
+            sh """
+                git clone https://${USERNAME}:${PASSWORD}@${repoUrl} source
+            """
         }
     }
 
