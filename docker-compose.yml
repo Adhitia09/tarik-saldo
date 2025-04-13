@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  app:
+    image: "docker.io/adhitia09/bejava:latest"
+    container_name: crud-java-app
+    restart: always
+    ports:
+      - "8383:8383"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/productdb
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: password
