@@ -50,8 +50,9 @@ node('maven') {
 
     stage ('Run Aplikasi with Container') {
         dir("source") {
-            sh "docker pull docker.io/adhitia09/${app}:latest"
-            sh "docker run -d -p 8383:8383 --name be_java docker.io/adhitia09/${app}:latest "
+            //sh "docker pull docker.io/adhitia09/${app}:latest"
+            //sh "docker run -d -p 8383:8383 --name be_java docker.io/adhitia09/${app}:latest "
+            sh "docker-compose up -d"
         }
     }
 }
