@@ -28,30 +28,30 @@ node('maven') {
 
             def tag = sh(returnStdout: true, script: "git rev-parse --short=8 HEAD").trim();
 
-            sh "podman build -t ${app} . "
-            sh "podman images"
-            sh "podman tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
+            sh "docker build -t ${app} . "
+            sh "docker images"
+            sh "docker tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
         }
     }
 
     stage ('Push to Dockerhub') {
         dir("source") {
             withCredentials([usernamePassword(credentialsId: 'docker-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                sh "podman push docker.io/adhitia09/${app}:${tag}  https://\${USERNAME}:\${PASSWORD}@index.docker.io/v1/ source "
+                sh "docker push docker.io/adhitia09/${app}:${tag}  https://\${USERNAME}:\${PASSWORD}@index.docker.io/v1/ source "
             }
 
-            sh "podman tag docker.io/adhitia09/${app}:${tag} docker.io/adhitia09/${app}:latest"
+            sh "docker tag docker.io/adhitia09/${app}:${tag} docker.io/adhitia09/${app}:latest"
 
             withCredentials([usernamePassword(credentialsId: 'docker-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                sh "podman push docker.io/adhitia09/${app}:latest  https://\${USERNAME}:\${PASSWORD}@index.docker.io/v1/ source "
+                sh "docker push docker.io/adhitia09/${app}:latest  https://\${USERNAME}:\${PASSWORD}@index.docker.io/v1/ source "
             }
         }
     }
 
     stage ('Run Aplikasi with Container') {
         dir("source") {
-            sh "podman pull docker.io/adhitia09/${app}:latest"
-            sh "podman run -d -p 8383:8383 --name be_java docker.io/adhitia09/${app}:latest "
+            sh "docker pull docker.io/adhitia09/${app}:latest"
+            sh "docker run -d -p 8383:8383 --name be_java docker.io/adhitia09/${app}:latest "
         }
     }
 }
