@@ -28,8 +28,8 @@ node() {
 
             def tag = sh(returnStdout: true, script: "git rev-parse --short=8 HEAD").trim();
 
-            sh "docker images"
-            sh "sleep 60"
+            //sh "docker images"
+            //sh "sleep 60"
             sh "docker build -t ${app} . "
             sh "docker tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
         }
