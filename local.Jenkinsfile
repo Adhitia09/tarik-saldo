@@ -30,7 +30,7 @@ node() {
 
             //sh "docker images"
             //sh "sleep 60"
-            sh "docker build -t ${app} . "
+            sh "podman build -t ${app} . "
             sh "docker tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
         }
     }
