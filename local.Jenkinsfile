@@ -1,4 +1,4 @@
-node('maven') {
+node() {
     def repoUrl = "gitlab.com/Gumelar09/be_java.git"
     def branch = "main"
     def app = "bejava"
@@ -16,7 +16,7 @@ node('maven') {
         dir("source") {
             sh "git fetch"
             sh "git switch ${branch}"
-            sh "mvn clean package -Dmaven.test.skip=true"
+            //sh "mvn clean package -Dmaven.test.skip=true"
         }
     }
 
@@ -24,12 +24,13 @@ node('maven') {
         dir("source") {
             sh "mkdir -p build-folder/target"
             sh "cp Dockerfile build-folder/Dockerfile"
-            sh "cp target/*.jar build-folder/target/"
+            //sh "cp target/*.jar build-folder/target/"
 
             def tag = sh(returnStdout: true, script: "git rev-parse --short=8 HEAD").trim();
 
-            sh "docker build -t ${app} . "
             sh "docker images"
+            sh "sleep 60"
+            sh "docker build -t ${app} . "
             sh "docker tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
         }
     }
