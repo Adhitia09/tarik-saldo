@@ -1,4 +1,4 @@
-FROM docker.io/openjdk:21-jdk-slim AS builder
+FROM docker.io/maven:3.9.9 AS builder
 
 WORKDIR /app
 
