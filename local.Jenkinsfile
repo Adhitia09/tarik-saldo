@@ -1,4 +1,4 @@
-node() {
+node('maven') {
     def repoUrl = "gitlab.com/Gumelar09/be_java.git"
     def branch = "main"
     def app = "bejava"
@@ -30,7 +30,7 @@ node() {
 
             //sh "docker images"
             //sh "sleep 60"
-            sh "podman build -t ${app} . "
+            sh "docker build -t ${app} . "
             sh "docker tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
         }
     }
