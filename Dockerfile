@@ -1,4 +1,4 @@
-FROM maven:3.9.9 as builder
+FROM docker.io/library/maven:3.9.9 as builder
 
 WORKDIR /app
 
