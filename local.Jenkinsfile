@@ -1,4 +1,4 @@
-node('maven') {
+node() {
     def repoUrl = "gitlab.com/Gumelar09/be_java.git"
     def branch = "main"
     def app = "bejava"
@@ -27,10 +27,9 @@ node('maven') {
             //sh "cp target/*.jar build-folder/target/"
 
             def tag = sh(returnStdout: true, script: "git rev-parse --short=8 HEAD").trim();
-
-            //sh "docker images"
             //sh "sleep 60"
             sh "docker build -t ${app} . "
+            sh "docker images"
             sh "docker tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
         }
     }
