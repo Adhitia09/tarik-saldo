@@ -1,21 +1,13 @@
-node('jdk9') {
+node() {
     def repoUrl = "gitlab.com/Gumelar09/be_java.git"
     def branch = "main"
     def app = "bejava"
     def tag = ""
 
-    stage ('Clone Repository') {
-        sh "rm -rf source"
-        withCredentials([usernamePassword(credentialsId: 'gitlab-new', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            sh "git clone https://${USERNAME}:${PASSWORD}@${repoUrl} source"
-            
-        }
-    }
-
     stage('Checkout Branch') {
         dir("source") {
-            sh "git fetch"
-            sh "git switch ${branch}"
+            bat "git fetch"
+            bat "git switch ${branch}"
             // sh "mvn clean package -Dmaven.test.skip=true"
         }
     }
