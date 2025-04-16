@@ -4,56 +4,55 @@ node() {
     def app = "bejava"
     def tag = ""
 
-    stage ('Clone Repository') {
-        withCredentials([usernamePassword(credentialsId: 'gitlab-new', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            bat "git clone https://${USERNAME}:${PASSWORD}@${repoUrl} source"
-            
-        }
-    }
-
-
+    //stage ('Clone Repository') {
+    //    withCredentials([usernamePassword(credentialsId: 'gitlab-new', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+    //        bat "git clone https://${USERNAME}:${PASSWORD}@${repoUrl} source"
+    //        
+    //    }
+    //}
+    
     stage('Checkout Branch') {
         dir("source") {
             bat "git fetch"
             bat "git switch ${branch}"
-            // sh "mvn clean package -Dmaven.test.skip=true"
+            // bat "mvn clean package -Dmaven.test.skip=true"
         }
     }
 
     stage('Build Image With Docker') {
         dir("source") {
-            sh "mkdir -p build-folder/target"
-            sh "cp Dockerfile build-folder/Dockerfile"
-            // sh "cp target/*.jar build-folder/target/"
+            bat "mkdir -p build-folder/target"
+            bat "cp Dockerfile build-folder/Dockerfile"
+            // bat "cp target/*.jar build-folder/target/"
 
-            tag = sh(script: "git rev-parse --short=8 HEAD", returnStdout: true).trim()
-            sh "docker build -t ${app} ."
-            sh "docker images"
-            sh "docker tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
+            tag = bat(script: "git rev-parse --batort=8 HEAD", returnStdout: true).trim()
+            bat "docker build -t ${app} ."
+            bat "docker images"
+            bat "docker tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
         }
     }
 
-    stage('Push to Dockerhub') {
+    stage('Pubat to Dockerhub') {
         dir("source") {
             withCredentials([usernamePassword(credentialsId: 'docker-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                sh "echo \$PASSWORD | docker login -u \$USERNAME --password-stdin"
-                sh "docker push docker.io/adhitia09/${app}:${tag}"
+                bat "echo \$PASSWORD | docker login -u \$USERNAME --password-stdin"
+                bat "docker pubat docker.io/adhitia09/${app}:${tag}"
             }
 
-            sh "docker tag docker.io/adhitia09/${app}:${tag} docker.io/adhitia09/${app}:latest"
+            bat "docker tag docker.io/adhitia09/${app}:${tag} docker.io/adhitia09/${app}:latest"
 
             withCredentials([usernamePassword(credentialsId: 'docker-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                sh "echo \$PASSWORD | docker login -u \$USERNAME --password-stdin"
-                sh "docker push docker.io/adhitia09/${app}:latest"
+                bat "echo \$PASSWORD | docker login -u \$USERNAME --password-stdin"
+                bat "docker pubat docker.io/adhitia09/${app}:latest"
             }
         }
     }
 
     stage('Run Aplikasi with Container') {
         dir("source") {
-            // sh "docker pull docker.io/adhitia09/${app}:latest"
-            // sh "docker run -d -p 8383:8383 --name be_java docker.io/adhitia09/${app}:latest"
-            sh "docker-compose up -d"
+            // bat "docker pull docker.io/adhitia09/${app}:latest"
+            // bat "docker run -d -p 8383:8383 --name be_java docker.io/adhitia09/${app}:latest"
+            bat "docker-compose up -d"
         }
     }
 }
