@@ -6,10 +6,10 @@ node() {
 
     stage ('Clone Repository') {
         bat 'rmdir /s /q source'
-        //withCredentials([usernamePassword(credentialsId: 'gitlab-new', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        //    bat "git clone https://${USERNAME}:${PASSWORD}@${repoUrl} source"
-        //    
-        //}
+        withCredentials([usernamePassword(credentialsId: 'gitlab-new', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            bat "git clone https://${USERNAME}:${PASSWORD}@${repoUrl} source"
+            
+        }
     }
     
     stage('Checkout Branch') {
