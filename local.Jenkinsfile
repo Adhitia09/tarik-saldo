@@ -20,7 +20,7 @@ node() {
 
     stage('Get Git Tag') {
         dir("source") {
-            tag = bat(script: 'git rev-parse --short=8 HEAD', returnStdout: true).trim()
+            tag = bat(script: 'git rev-parse --short=8 HEAD', returnStdout: true).readLines().last().trim()
             echo "Commit tag is: ${tag}"
         }
     }
