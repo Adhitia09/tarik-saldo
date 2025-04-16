@@ -1,4 +1,4 @@
-FROM docker.io/maven:3.9.9 AS builder
+FROM adhitia09/maven:3.9.9 AS builder
 
 WORKDIR /app
 
