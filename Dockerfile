@@ -1,4 +1,4 @@
-FROM maven:3.9.9 AS builder
+FROM localhost/maven:3.9.9 AS builder
 
 WORKDIR /app
 
