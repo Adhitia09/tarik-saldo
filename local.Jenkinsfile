@@ -2,6 +2,7 @@ node() {
     def repoUrl = "gitlab.com/Gumelar09/be_java.git"
     def branch = "main"
     def app = "bejava"
+    def tag = ""
 
     //stage ('Clone Repository') {
     //    withCredentials([usernamePassword(credentialsId: 'gitlab-new', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -18,14 +19,22 @@ node() {
         }
     }
 
+    stage('Get Git Tag') {
+        dir("source") {
+            // Ambil commit short SHA
+            tag = bat(script: 'git rev-parse --short=8 HEAD', returnStdout: true).trim()
+            echo "Commit tag is: ${tag}"
+        }
+    }
+
     stage('Build Image With Docker') {
         dir("source") {
             //bat "mkdir -p build-folder/target"
             //bat "cp Dockerfile build-folder/Dockerfile"
             // bat "cp target/*.jar build-folder/target/"
 
-            def tag = bat(script: 'git rev-parse --short=8 HEAD', returnStdout: true).trim()
-            echo "Git tag: ${tag}" // tampilkan hash buat konfirmasi
+            //def tag = bat(script: 'git rev-parse --short=8 HEAD', returnStdout: true).trim()
+            //echo "Git tag: ${tag}" // tampilkan hash buat konfirmasi
             
             bat "docker build -t ${app} ."
             bat "docker images"
