@@ -21,8 +21,8 @@ node() {
 
     stage('Build Image With Docker') {
         dir("source") {
-            bat "mkdir -p build-folder/target"
-            bat "cp Dockerfile build-folder/Dockerfile"
+            //bat "mkdir -p build-folder/target"
+            //bat "cp Dockerfile build-folder/Dockerfile"
             // bat "cp target/*.jar build-folder/target/"
 
             tag = bat(script: "git rev-parse --batort=8 HEAD", returnStdout: true).trim()
