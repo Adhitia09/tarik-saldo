@@ -25,7 +25,7 @@ node() {
             //bat "cp Dockerfile build-folder/Dockerfile"
             // bat "cp target/*.jar build-folder/target/"
 
-            tag = bat(script: "git rev-parse --batort=8 HEAD", returnStdout: true).trim()
+            def tag = bat(returnStdout: true, script: "git rev-parse --short=8 HEAD").trim()
             bat "docker build -t ${app} ."
             bat "docker images"
             bat "docker tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
