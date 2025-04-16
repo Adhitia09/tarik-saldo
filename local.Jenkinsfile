@@ -25,7 +25,8 @@ node() {
             // bat "cp target/*.jar build-folder/target/"
 
             def tag = bat(script: 'git rev-parse --short=8 HEAD', returnStdout: true).trim()
-            bat "echo Commit tag is ${tag}"
+            echo "Git tag: ${tag}" // tampilkan hash buat konfirmasi
+            
             bat "docker build -t ${app} ."
             bat "docker images"
             bat "docker tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
