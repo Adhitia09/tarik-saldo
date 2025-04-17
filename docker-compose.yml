@@ -7,7 +7,3 @@ services:
     restart: always
     ports:
       - "8383:8383"
-    //environment:
-    //  SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/productdb
-    //  SPRING_DATASOURCE_USERNAME: admin
-    //  SPRING_DATASOURCE_PASSWORD: password
