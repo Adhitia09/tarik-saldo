@@ -5,7 +5,10 @@ node() {
     def tag = ""
 
     stage('Clone Repository') {
-        bat 'rmdir /s /q source || exit 0' // biar gak error kalau folder belum ada
+        if (fileExists('source')) {
+            echo 'Directory source already exists, cleaning it up...'
+            deleteDir()  // Hapus semua file di dalamnya
+        }
         withCredentials([usernamePassword(credentialsId: 'gitlab-new', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             bat "git clone https://${USERNAME}:${PASSWORD}@${repoUrl} source"
         }
