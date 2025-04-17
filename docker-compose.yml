@@ -7,3 +7,17 @@ services:
     restart: always
     ports:
       - "8383:8383"
+  
+  database:
+    image: "postgres:13"
+    container_name: db-postgre
+    restart: none
+    environment:
+      POSTGRES_DB: productdb
+      POSTGRES_USER: postgres 
+      POSTGRES_PASSWORD: admin
+    ports: 
+      - "5432:5432"
+    volumes:
+      - "./volume/db/:/var/lib/postgresql/data/"
+    
