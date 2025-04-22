@@ -13,7 +13,7 @@ services:
       
 networks:
   app-network:
-    driver: bridge
+    external: true
   
   # database:
   #   image: "postgres:13"
