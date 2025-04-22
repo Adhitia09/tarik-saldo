@@ -10,6 +10,10 @@ services:
       - "8383:8383"
     networks:
       - app-network
+      
+networks:
+  app-network:
+    driver: bridge
   
   # database:
   #   image: "postgres:13"
