@@ -1,10 +1,10 @@
-name: tabungan-service
+name: tarik-saldo-service
 version: '3.8'
 
 services:
   app:
     image: "docker.io/adhitia09/tarik-saldo:latest"
-    container_name: tabungan-service
+    container_name: tarik-saldo-service
     restart: always
     ports:
       - "8383:8383"
