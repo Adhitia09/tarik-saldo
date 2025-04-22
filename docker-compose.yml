@@ -8,6 +8,8 @@ services:
     restart: always
     ports:
       - "8383:8383"
+    networks:
+      - app-network
   
   # database:
   #   image: "postgres:13"
