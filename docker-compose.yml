@@ -2,22 +2,22 @@ version: '3.8'
 
 services:
   app:
-    image: "docker.io/adhitia09/bejava:latest"
-    container_name: crud-java-app
+    image: "docker.io/adhitia09/tarik-saldo:latest"
+    container_name: tabungan-service
     restart: always
     ports:
       - "8383:8383"
   
-  database:
-    image: "postgres:13"
-    container_name: db-postgre
-    restart: none
-    environment:
-      POSTGRES_DB: productdb
-      POSTGRES_USER: postgres 
-      POSTGRES_PASSWORD: admin
-    ports: 
-      - "5432:5432"
-    volumes:
-      - "./volume/db/:/var/lib/postgresql/data/"
+  # database:
+  #   image: "postgres:13"
+  #   container_name: db-postgre
+  #   restart: none
+  #   environment:
+  #     POSTGRES_DB: productdb
+  #     POSTGRES_USER: postgres 
+  #     POSTGRES_PASSWORD: admin
+  #   ports: 
+  #     - "5432:5432"
+  #   volumes:
+  #     - "./volume/db/:/var/lib/postgresql/data/"
     
