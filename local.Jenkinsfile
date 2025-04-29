@@ -51,6 +51,9 @@ node() {
                 // push latest
                 bat "docker push docker.io/adhitia09/${app}:latest"
             }
+
+            bat "docker images"
+            bat "docker rmi adhitia09/${app}:${tag}"
         }
     }
 
