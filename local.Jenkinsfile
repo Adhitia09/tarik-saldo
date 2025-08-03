@@ -7,7 +7,7 @@ node() {
     stage('Clone Repository') {
         if (fileExists('source')) {
             echo 'Directory source already exists, cleaning it up...'
-            rm -rf source  // Hapus semua file di dalamnya
+            sh "rm -rf source"  // Hapus semua file di dalamnya
         }
         withCredentials([usernamePassword(credentialsId: 'gitlab-new', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             sh "git clone https://${USERNAME}:${PASSWORD}@${repoUrl} source"
