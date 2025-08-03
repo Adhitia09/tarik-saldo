@@ -57,9 +57,25 @@ node() {
         }
     }
 
-    stage('Run Aplikasi with Container') {
-        dir("source") {
-            sh "docker-compose up -d"
+    //stage('Run Aplikasi with Container') {
+    //    dir("source") {
+    //        sh "docker-compose up -d"
+    //    }
+    //}
+
+    stage('Deploy to VM') {
+        sshagent(['jenkins-key']) { // Gantilah 'vm-ssh-key' dengan ID credentials private key-mu
+            dir("source") {
+                // Copy docker-compose ke VM
+                sh "scp docker-compose.yml admin@192.168.1.15:/home/admin/"
+                
+                // Jalankan docker-compose dari VM
+                sh """
+                    ssh admin@192.168.1.15 '
+                        cd /home/admin && docker-compose up -d
+                    '
+                """
+            }
         }
     }
 }
