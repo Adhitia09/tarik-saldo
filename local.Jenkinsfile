@@ -7,32 +7,32 @@ node() {
     stage('Clone Repository') {
         if (fileExists('source')) {
             echo 'Directory source already exists, cleaning it up...'
-            deleteDir()  // Hapus semua file di dalamnya
+            rm -rf source  // Hapus semua file di dalamnya
         }
         withCredentials([usernamePassword(credentialsId: 'gitlab-new', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            bat "git clone https://${USERNAME}:${PASSWORD}@${repoUrl} source"
+            sh "git clone https://${USERNAME}:${PASSWORD}@${repoUrl} source"
         }
     }
 
     stage('Checkout Branch') {
         dir("source") {
-            bat "git fetch"
-            bat "git switch ${branch}"
+            sh "git fetch"
+            sh "git switch ${branch}"
         }
     }
 
     stage('Get Git Tag') {
         dir("source") {
-            tag = bat(script: 'git rev-parse --short=8 HEAD', returnStdout: true).readLines().last().trim()
+            tag = sh(script: 'git rev-parse --short=8 HEAD', returnStdout: true).readLines().last().trim()
             echo "Commit tag is: ${tag}"
         }
     }
 
     stage('Build Image With Docker') {
         dir("source") {
-            bat "docker build -t ${app} ."
-            bat "docker images"
-            bat "docker tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
+            sh "docker build -t ${app} ."
+            sh "docker images"
+            sh "docker tag ${app}:latest docker.io/adhitia09/${app}:${tag}"
         }
     }
 
@@ -40,26 +40,26 @@ node() {
         dir("source") {
             withCredentials([usernamePassword(credentialsId: 'docker-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 // login docker
-                bat "echo %PASSWORD% | docker login -u %USERNAME% --password-stdin"
+                sh "echo %PASSWORD% | docker login -u %USERNAME% --password-stdin"
 
                 // push image dengan tag commit
-                bat "docker push docker.io/adhitia09/${app}:${tag}"
+                sh "docker push docker.io/adhitia09/${app}:${tag}"
 
                 // tag sebagai 'latest'
-                bat "docker tag docker.io/adhitia09/${app}:${tag} docker.io/adhitia09/${app}:latest"
+                sh "docker tag docker.io/adhitia09/${app}:${tag} docker.io/adhitia09/${app}:latest"
 
                 // push latest
-                bat "docker push docker.io/adhitia09/${app}:latest"
+                sh "docker push docker.io/adhitia09/${app}:latest"
             }
 
-            bat "docker images"
-            bat "docker rmi adhitia09/${app}:${tag}"
+            sh "docker images"
+            sh "docker rmi adhitia09/${app}:${tag}"
         }
     }
 
     stage('Run Aplikasi with Container') {
         dir("source") {
-            bat "docker-compose up -d"
+            sh "docker-compose up -d"
         }
     }
 }
