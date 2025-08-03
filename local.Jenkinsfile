@@ -10,7 +10,7 @@ node() {
             sh "rm -rf source"  // Hapus semua file di dalamnya
         }
         //withCredentials([usernamePassword(credentialsId: 'gitlab-new', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            sh "git clone https:{repoUrl} source"
+            sh "git clone https://{repoUrl} source"
         //}
     }
 
