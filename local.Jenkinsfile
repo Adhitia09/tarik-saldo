@@ -9,9 +9,9 @@ node() {
             echo 'Directory source already exists, cleaning it up...'
             sh "rm -rf source"  // Hapus semua file di dalamnya
         }
-        withCredentials([usernamePassword(credentialsId: 'gitlab-new', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            sh "git clone https://${USERNAME}:${PASSWORD}@${repoUrl} source"
-        }
+        //withCredentials([usernamePassword(credentialsId: 'gitlab-new', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            sh "git clone https:{repoUrl} source"
+        //}
     }
 
     stage('Checkout Branch') {
