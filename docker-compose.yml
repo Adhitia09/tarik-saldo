@@ -1,4 +1,4 @@
-name: tarik-saldo-service
+#name: tarik-saldo-service
 version: '3.8'
 
 services:
