@@ -30,7 +30,7 @@ node() {
                 // Jalankan docker-compose dari VM
                 sh """
                     ssh admin@192.168.1.15 '
-                        cd /home/admin && docker-compose up -d
+                        cd /home/admin && docker compose up -d
                     '
                 """
             }
