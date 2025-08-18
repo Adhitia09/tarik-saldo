@@ -22,7 +22,7 @@ node() {
     }
 
     stage('Deploy to VM') {
-        sshagent(['jenkins-key']) { // Gantilah 'vm-ssh-key' dengan ID credentials private key-mu
+        sshagent(['jenkins-priv-key']) { // Gantilah 'vm-ssh-key' dengan ID credentials private key-mu
             dir("source") {
                 // Copy docker-compose ke VM
                 sh "scp docker-compose.yml root@192.168.1.15:/home/admin/"
