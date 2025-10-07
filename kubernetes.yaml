@@ -1,0 +1,70 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: tarik-saldo
+  namespace: opstest
+spec:
+  selector:
+    app: tarik-saldo
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 1515
+    targetPort: 1515
+    name: http
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tarik-saldo
+  namespace: opstest
+  labels:
+    app: tarik-saldo
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0%
+      maxUnavailable: 25%
+  minReadySeconds: 5
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: tarik-saldo
+  template:
+    metadata:
+      labels:
+        app: tarik-saldo
+    spec:
+      containers:
+      - name: tarik-saldo
+        image: docker.io/adhitia09/tarik-saldo
+        ports:
+        - containerPort: 1515
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "500Mi"
+          requests:
+            cpu: "0.1"
+            memory: "250Mi"
+
+
+---
+ 
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: tarik-saldo
+  namespace: opstest
+spec:
+  maxReplicas: 1
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: tarik-saldo
