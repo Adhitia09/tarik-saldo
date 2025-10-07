@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
       - name: tarik-saldo
-        image: docker.io/adhitia09/tarik-saldo
+        image: docker.io/adhitia09/tarik-saldo:fix
         ports:
         - containerPort: 1515
         imagePullPolicy: Always
