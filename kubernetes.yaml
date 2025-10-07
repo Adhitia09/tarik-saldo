@@ -6,7 +6,7 @@ metadata:
 spec:
   selector:
     app: tarik-saldo
-  type: ClusterIp
+  type: ClusterIP
   ports:
   - protocol: TCP
     port: 8383
