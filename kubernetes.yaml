@@ -9,8 +9,8 @@ spec:
   type: LoadBalancer
   ports:
   - protocol: TCP
-    port: 1515
-    targetPort: 1515
+    port: 8383
+    targetPort: 8383
     name: http
 
 ---
@@ -43,7 +43,7 @@ spec:
       - name: tarik-saldo
         image: docker.io/adhitia09/tarik-saldo:fix
         ports:
-        - containerPort: 1515
+        - containerPort: 8383
         imagePullPolicy: Always
         resources:
           limits:
