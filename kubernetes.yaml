@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
       - name: tarik-saldo
-        image: $IMAGE
+        image: image-registry.openshift-image-registry.svc:5000/opstest/tarik-saldo:0a37789f
         ports:
         - containerPort: 8383
         imagePullPolicy: Always
