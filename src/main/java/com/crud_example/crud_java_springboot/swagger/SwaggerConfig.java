@@ -12,7 +12,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("CRUD API Documentation")
-                        .version("1.0")
+                        .version("2.0")
                         .description("Dokumentasi API untuk CRUD Product"));
     }
 }
