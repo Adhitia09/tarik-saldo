@@ -2,7 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: tarik-saldo
-  namespace: opstest
+  namespace: githubactions
 spec:
   selector:
     app: tarik-saldo
@@ -19,7 +19,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tarik-saldo
-  namespace: opstest
+  namespace: githubactions
   labels:
     app: tarik-saldo
 spec:
@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
       - name: tarik-saldo
-        image: image-registry.openshift-image-registry.svc:5000/opstest/tarik-saldo:8aa151f
+        image: docker.io/adhitia09/tarik-saldo:8aa151f
         ports:
         - containerPort: 8383
         imagePullPolicy: Always
@@ -60,7 +60,7 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: tarik-saldo
-  namespace: opstest
+  namespace: githubactions
 spec:
   maxReplicas: 1
   minReplicas: 1
@@ -69,3 +69,4 @@ spec:
     kind: Deployment
 
     name: tarik-saldo
+
