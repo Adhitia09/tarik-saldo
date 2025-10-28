@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
       - name: tarik-saldo
-        image: image-registry.openshift-image-registry.svc:5000/opstest/tarik-saldo:f2f4065b
+        image: image-registry.openshift-image-registry.svc:5000/opstest/tarik-saldo:8aa151f
         ports:
         - containerPort: 8383
         imagePullPolicy: Always
@@ -67,4 +67,5 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
+
     name: tarik-saldo
