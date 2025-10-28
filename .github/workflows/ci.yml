@@ -28,10 +28,10 @@ jobs:
       - name: Set tag dynamically
         id: vars
         run: |
-          # Ambil tag GitHub jika ada, atau gunakan timestamp
-          TAG=${GITHUB_REF_NAME:-latest}
+          # Ambil 7 karakter pertama dari commit ID (misalnya a1b2c3d)
+          TAG=${GITHUB_SHA::7}
           echo "TAG=$TAG" >> $GITHUB_ENV
-          
+          echo "$TAG"
       - name: Push image to Docker Hub
         if: github.ref == 'refs/heads/main'
         run: |
