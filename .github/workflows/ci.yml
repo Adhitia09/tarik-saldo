@@ -17,6 +17,16 @@ jobs:
       - name: Build Docker image
         run: docker build -t tarik-saldo:latest .
 
+      - name: Set tag dynamically
+        id: vars
+        run: |
+          # Ambil tag GitHub jika ada, atau gunakan timestamp
+          TAG=${GITHUB_REF_NAME:-latest}
+          echo "TAG=$TAG" >> $GITHUB_ENV
+
+      - name: Tag Docker image
+        run: docker tag tarik-saldo:latest tarik-saldo:${{ env.TAG }}
+
       # OPSIONAL: Push ke Docker Hub
       - name: Log in to Docker Hub
         if: github.ref == 'refs/heads/main'
