@@ -1,4 +1,4 @@
-FROM image-registry.openshift-image-registry.svc:5000/cicd/maven:3.9.9 AS builder
+FROM docker.io/library/maven:3.9.9 AS builder
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY . .
 RUN mvn clean package -Dmaven.test.skip=true
 
 # Gunakan image JDK yang lebih ringan untuk runtime
-FROM image-registry.openshift-image-registry.svc:5000/cicd/openjdk:21-jdk-slim
+FROM docker.io/library/openjdk:21-jdk-slim
 
 ENV SPRING_MVC_DISPATCH_TRACE_REQUEST=false
 ENV SPRING_MVC_DISPATCH_DELETE_REQUEST=false
